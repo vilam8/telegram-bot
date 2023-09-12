@@ -33,18 +33,23 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Echo the user message."""
     await update.message.reply_text(update.message.text)
 
-
+async def Hi(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Echo the user message."""
+    if update.message.text.lower() == "hello":
+        await update.message.reply_text("и чо")
+    if update.message.text.lower().find('bye') >= 0: 
+        await update.message.reply_text("пока кожанный ")
 def main() -> None:
     """Start the bot."""
     # Create the Application and pass it your bot's token.
-    application = Application.builder().token("TOKEN").build()
+    application = Application.builder().token("6329965958:AAH71iIC88HkEr3LkdeXXYBpsWBW-7vIbyM").build()
 
     # on different commands - answer in Telegram
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help_command))
 
     # on non command i.e message - echo the message on Telegram
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, Hi))
 
     # Run the bot until the user presses Ctrl-C
     application.run_polling(allowed_updates=Update.ALL_TYPES)
